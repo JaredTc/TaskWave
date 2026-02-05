@@ -1,0 +1,48 @@
+<div class="main">
+  <div class="card-body-container">
+    <div class="header-body">
+      <h2>Hello👋🏻</h2>
+      <span>Please insert your credentials for continue</span>
+    </div>
+    <form class="form" (ngSubmit)="submited()" [formGroup]="form">
+      <div class="input-group">
+        <i class="pi pi-user"></i>
+        <input
+          pInputText
+          formControlName="identifier"
+          placeholder="Email or username"
+        />
+      </div>
+
+      <div class="input-group">
+        <i class="pi pi-lock"></i>
+        <input placeholder="***********" pPassword type="password" formControlName="password"/>
+      </div>
+      <span
+        *ngIf="MSG"
+        class="alert"
+        [ngClass]="{
+          'alert-success': status === 'success',
+          'alert-error': status === 'error'
+        }"
+            >
+        {{ MSG }}
+      </span>
+<!--      <pre>{{ status }} | {{ MSG }}</pre>-->
+
+      <div class="btn-content">
+        <p-button
+          [loading]="isLoading"
+          class="send"
+          type="submit"
+          [disabled]="form.invalid"
+          [label]="'Login'"
+        ></p-button>
+      </div>
+    </form>
+    <div class="create-new-account">
+      create your account <span class="here">here</span>
+    </div>
+
+  </div>
+</div>

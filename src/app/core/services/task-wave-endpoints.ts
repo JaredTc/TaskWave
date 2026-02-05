@@ -1,7 +1,7 @@
 
 export const taskWaveEndpoints = {
-  auth: '/test-taskwave/auth/auth-user/',
-  refresh_token: '',
-  logOut: '',
+  auth: 'api/auth/login',
+  refresh_token: 'api/auth/refresh',
+  logOut: 'api/auth/logout',
 
 }
