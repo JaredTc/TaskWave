@@ -18,16 +18,8 @@
         <i class="pi pi-lock"></i>
         <input placeholder="***********" pPassword type="password" formControlName="password"/>
       </div>
-      <span
-        *ngIf="MSG"
-        class="alert"
-        [ngClass]="{
-          'alert-success': status === 'success',
-          'alert-error': status === 'error'
-        }"
-            >
-        {{ MSG }}
-      </span>
+
+      <app-message-notify [status]="status" [MSG]="MSG"></app-message-notify>
 <!--      <pre>{{ status }} | {{ MSG }}</pre>-->
 
       <div class="btn-content">
@@ -41,7 +33,7 @@
       </div>
     </form>
     <div class="create-new-account">
-      create your account <span class="here">here</span>
+      create your account <span (click)="navigateToRegister()" class="here">here</span>
     </div>
 
   </div>

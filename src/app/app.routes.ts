@@ -10,6 +10,12 @@ export const routes: Routes = [
       import('./features/authenticate/authentication.routes')
         .then(m => m.AuthenticationRoutes),
   },
+   {
+        path: 'register',
+        loadChildren: () =>
+          import('./features/register-account-component/register-account.routes')
+            .then(m => m.RegisterAccountRoutes),
+      },
 
   {
     path: '',
@@ -27,7 +33,8 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/home-component/home.routes')
             .then(m => m.HomeRoutes),
-      }
+      },
+
     ]
   },
 
