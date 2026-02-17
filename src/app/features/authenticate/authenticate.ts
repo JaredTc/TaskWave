@@ -1,20 +1,22 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
-import {Button} from 'primeng/button';
-import {ReactiveFormsModule, Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
-import {AuthenticationService} from '../../core/services/auth-service/authentication.service';
-import {ReqStatus} from '../../core/models/genearl.models';
-import {NgClass, NgIf, NgStyle} from '@angular/common';
-import {finalize} from 'rxjs';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { Button } from 'primeng/button';
+import {
+  ReactiveFormsModule,
+  Validators,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
+import { AuthenticationService } from '../../core/services/auth-service/authentication.service';
+import { ReqStatus } from '../../core/models/genearl.models';
+import { NgClass, NgIf, NgStyle } from '@angular/common';
+import { finalize } from 'rxjs';
+import { Router } from '@angular/router';
+import { MessageNotify } from '../../shared/message-notify/message-notify';
 
 @Component({
   selector: 'app-authenticate',
-  imports: [
-    Button,
-    ReactiveFormsModule,
-    NgIf,
-    NgClass,
-
-  ],
+  imports: [Button, ReactiveFormsModule, MessageNotify],
   templateUrl: './authenticate.html',
   styleUrl: './authenticate.scss',
 })
@@ -22,16 +24,17 @@ export class Authenticate {
   form!: FormGroup;
   status: ReqStatus = 'init';
 
-  constructor(private fb: FormBuilder,
-              private cd: ChangeDetectorRef,
-              private  authService: AuthenticationService) {
+  constructor(
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef,
+    private router: Router,
+    private authService: AuthenticationService,
+  ) {
     this.form = this.fb.group({
       identifier: ['', [Validators.required, this.emailOrUsernameValidator]],
       password: ['', Validators.required],
     });
   }
-
-
 
   emailOrUsernameValidator(control: AbstractControl) {
     const value = control.value;
@@ -47,7 +50,7 @@ export class Authenticate {
     return { invalidIdentifier: true };
   }
 
-  MSG = ''
+  MSG = '';
   showMSG = false;
   isLoading = false;
   submited() {
@@ -60,34 +63,34 @@ export class Authenticate {
 
     const payload = {
       username: this.form.value.identifier,
-      password: this.form.value.password
+      password: this.form.value.password,
     };
 
- setTimeout(() => {
-   this.authService.autheticate(payload)
-     .pipe(
-       finalize(() => {
-         this.isLoading = false;
-       })
-     )
-     .subscribe({
-       next: () => {
-         this.status = 'success';
-         this.isLoading = false;
-         this.MSG = 'Authentication successful';
-         this.cd.markForCheck();
-
-       },
-       error: (err: Error) => {
-         this.status = 'error';
-         this.isLoading = false;
-         this.MSG = err.message;
-         this.cd.markForCheck();
-       }
-     });
-
-   }, 2000
- )
-}
-
+    setTimeout(() => {
+      this.authService
+        .autheticate(payload)
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+          }),
+        )
+        .subscribe({
+          next: () => {
+            this.status = 'success';
+            this.isLoading = false;
+            this.MSG = 'Authentication successful';
+            this.cd.markForCheck();
+          },
+          error: (err: Error) => {
+            this.status = 'error';
+            this.isLoading = false;
+            this.MSG = err.message;
+            this.cd.markForCheck();
+          },
+        });
+    }, 2000);
+  }
+  navigateToRegister() {
+    this.router.navigate(['/register/account']);
+  }
 }

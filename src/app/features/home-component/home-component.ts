@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {TokenService} from '../../core/services/auth-service/token.service';
 import {CommonModule} from '@angular/common';
 import {AuthenticationService} from '../../core/services/auth-service/authentication.service';
+import { filter, Observable } from 'rxjs';
+import { User } from '../../core/models/auth.model';
 
 @Component({
   selector: 'app-home-component',
@@ -12,6 +14,7 @@ import {AuthenticationService} from '../../core/services/auth-service/authentica
 export class HomeComponent {
   roles: string[] = [];
   isAdmin = false;
+  userData$!: Observable<User | null>;
 
   constructor(private tokenService: TokenService,
               private auth: AuthenticationService) {}
@@ -19,12 +22,14 @@ export class HomeComponent {
   ngOnInit() {
     this.isAdmin = this.roles.includes('ADMIN');
     this.roles = this.tokenService.getRoles();
-
+    this.userData$ = this.auth.user$
 
   }
 
   doAdminTask() {
-    alert('¡Tarea de admin ejecutada!');
+    // this.auth.postMe().subscribe();
+    this.auth.refreshToken().subscribe();
+
   }
 
   close(){

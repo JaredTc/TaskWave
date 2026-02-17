@@ -1,0 +1,40 @@
+<div class="main">
+  <div class="card-body-container">
+    <div class="header-body">
+      <h2>Create Account 👋🏻</h2>
+      <span>Please register on our streamline , where you can continue using our service</span>
+    </div>
+    <form class="form" (ngSubmit)="registerAccount()" [formGroup]="form">
+      <div class="input-group">
+        <i class="pi pi-user"></i>
+        <input pInputText formControlName="username" placeholder="Username" />
+      </div>
+      <div class="input-group">
+        <i class="pi pi-envelope"></i>
+        <input placeholder="Email" pInputText formControlName="email" />
+      </div>
+
+      <div class="input-group">
+        <i class="pi pi-lock"></i>
+        <input placeholder="***********" pPassword type="password" formControlName="password" />
+      </div>
+      <!-- NOTIFICACION -->
+      <app-message-notify [status]="status" [MSG]="MSG"></app-message-notify>
+      <!--  -->
+      <div class="btn-content">
+        <p-button
+
+          [loading]="isLoading"
+          class="send"
+          type="submit"
+          [disabled]="form.invalid || status === 'success'"
+          [label]="'Sign Up'"
+        ></p-button>
+      </div>
+      <span class="login">back to <span (click)="navigateToLogin()">login</span></span>
+
+    </form>
+  </div>
+</div>
+
+<!--  -->

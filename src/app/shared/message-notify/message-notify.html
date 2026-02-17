@@ -1,0 +1,10 @@
+<span
+        *ngIf="MSG"
+        class="alert"
+        [ngClass]="{
+          'alert-success': status === 'success',
+          'alert-error': status === 'error'
+        }"
+            >
+        {{ MSG }}
+      </span>

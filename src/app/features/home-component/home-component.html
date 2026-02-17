@@ -3,5 +3,6 @@
 <p>Roles de tu usuario: {{ roles.join(', ') }}</p>
 
 <!-- Mostrar botón solo si tiene rol ADMIN -->
-<button *ngIf="isAdmin" (click)="doAdminTask()">Acción de Admin</button>
+ <span>{{ userData$ | async | json }}</span>
+<button (click)="doAdminTask()">Acción de Admin</button>
 <button (click)="close()">Log Out</button>
